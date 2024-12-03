@@ -21,6 +21,7 @@
 
 sed -i 's/ssid=LEDE/ssid=$([ $devidx -eq 0 ] \&\& echo "OpenWrt_5G" || echo "OpenWrt_2.4G")/g' package/kernel/mac80211/files/lib/wifi/mac80211.sh
 sed -i 's/192.168.1/192.168.0/g' package/base-files/files/bin/config_generate
+sed -i 's/LEDE/OpenWrt/g' package/base-files/files/bin/config_generate
 sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci/Makefile
 sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci-light/Makefile
 sed -i 's/luci-theme-bootstrap/luci-theme-argon/g' feeds/luci/collections/luci-nginx/Makefile
