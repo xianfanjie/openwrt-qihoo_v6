@@ -47,9 +47,9 @@ git clone https://github.com/jerrykuku/luci-app-argon-config.git package/luci-ap
 # Alist
 git clone https://github.com/sbwml/luci-app-alist package/alist
 # automount cpufreq
-git_sparse_clone master https://github.com/coolsnowwolf/lede package/lean/autocore package/lean/cpufreq
+# git_sparse_clone master https://github.com/coolsnowwolf/lede package/lean/autocore package/lean/cpufreq
 git_sparse_clone master https://github.com/immortalwrt/immortalwrt package/emortal/automount
-git_sparse_clone master https://github.com/coolsnowwolf/luci applications/luci-app-cpufreq
+# git_sparse_clone master https://github.com/coolsnowwolf/luci applications/luci-app-cpufreq
 #applications/luci-app-vlmcsd
 #git_sparse_clone master https://github.com/coolsnowwolf/packages net/vlmcsd
 
