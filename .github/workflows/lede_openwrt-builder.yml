@@ -10,19 +10,19 @@
 # See /LICENSE for more information.
 #
 
-name: OpenWrt Builder
+name: LEDE OpenWrt Builder
 
 on:
   repository_dispatch:
   workflow_dispatch:
 
 env:
-  REPO_URL: https://github.com/openwrt/openwrt
-  REPO_BRANCH: main
+  REPO_URL: https://github.com/coolsnowwolf/lede
+  REPO_BRANCH: master
   FEEDS_CONF: feeds.conf.default
-  CONFIG_FILE: ./config/openwrt_360v6.config
+  CONFIG_FILE: ./config/lede_360v6.config
   DIY_P1_SH: ./scripts/diy-part1.sh
-  DIY_P2_SH: ./scripts/openwrt-diy-part2.sh
+  DIY_P2_SH: ./scripts/lede-diy-part2.sh
   UPLOAD_BIN_DIR: true
   UPLOAD_FIRMWARE: true
   UPLOAD_RELEASE: true
@@ -35,7 +35,7 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@main
-      with:
+      with: 
         fetch-depth: 0
 
     - name: Initialization environment
@@ -56,15 +56,14 @@ jobs:
       working-directory: /workdir
       run: |
         df -hT $PWD
-        # git clone $REPO_URL -b $REPO_BRANCH openwrt
-        git clone --depth 1 -b $REPO_BRANCH $REPO_URL openwrt
+        git clone $REPO_URL -b $REPO_BRANCH openwrt
         ln -sf /workdir/openwrt $GITHUB_WORKSPACE/openwrt
 
     - name: Cache
       uses: klever1988/cachewrtbuild@main
       with:
         ccache: 'true'
-        mixkey: 'openwrt_qihoo_360v6'
+        mixkey: 'lede_qihoo_v6'
         prefix: ${{ github.workspace }}/openwrt
 
     - name: Load custom feeds
@@ -78,10 +77,12 @@ jobs:
       run: |
         cd openwrt
         ./scripts/feeds update -a
+        ./scripts/feeds update -a
 
     - name: Install feeds
       run: |
         cd openwrt
+        ./scripts/feeds install -a
         ./scripts/feeds install -a
 
     - name: Load custom configuration
@@ -147,7 +148,7 @@ jobs:
       id: tag
       if: env.UPLOAD_RELEASE == 'true' && !cancelled()
       run: |
-        echo "release_tag=openwrt_$(date +"%Y.%m.%d-%H%M")" >> $GITHUB_OUTPUT
+        echo "release_tag=$(date +"%Y.%m.%d-%H%M")" >> $GITHUB_OUTPUT
         touch release.txt
         [ ${UPLOAD_GOFILE} = true && ${{ steps.gofile.outputs.url }} ] && echo "🔗 [GoFile](${{ steps.gofile.outputs.url }})" >> release.txt
         echo "status=success" >> $GITHUB_OUTPUT
@@ -166,13 +167,13 @@ jobs:
       uses: Mattraks/delete-workflow-runs@main
       with:
         retain_days: 0
-        keep_minimum_runs: 3
+        keep_minimum_runs: 5
 
     - name: Remove old Releases
       uses: dev-drprasad/delete-older-releases@master
       if: env.UPLOAD_RELEASE == 'true' && !cancelled()
       with:
-        keep_latest: 3
+        keep_latest: 10
         delete_tags: true
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
