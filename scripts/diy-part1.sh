@@ -21,7 +21,8 @@ git clone --depth=1 https://github.com/jerrykuku/luci-app-argon-config package/l
 git clone --depth=1 https://github.com/sbwml/luci-app-alist package/alist
 
 git_sparse_clone master https://github.com/immortalwrt/immortalwrt package/emortal/automount
-
+git_sparse_clone master https://github.com/coolsnowwolf/luci applications/luci-app-vlmcsd
+git_sparse_clone master https://github.com/coolsnowwolf/packages net/vlmcsd
 ./scripts/feeds update -a
 
 # 修改默认主题
