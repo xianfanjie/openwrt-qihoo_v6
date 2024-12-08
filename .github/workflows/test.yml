@@ -8,7 +8,8 @@ on:
 env:
   REPO_URL: https://github.com/openwrt/openwrt.git
   REPO_BRANCH: main
-  FILES: ${{ secrets.FILES }}
+  LOAD_FILES: true
+  ENCODING_FILES: ${{ secrets.FILES }}
   FEEDS_CONF: ./feeds/feeds.conf.default
   CONFIG_FILE: ./config/openwrt_360v6.config
   DIY_P1_SH: ./scripts/diy-part1.sh
@@ -75,8 +76,9 @@ jobs:
         echo "VERSION_INFO=$VERSION_INFO" >> $GITHUB_ENV
 
     - name: Decode files and Move files
+      if: env.LOAD_FILES == 'true'
       run: |
-        echo "$ENCRYPTED_FILES_BASE64" | base64 --decode > files.tar.gz
+        echo "$ENCODING_FILES" | base64 --decode > files.tar.gz
         tar -xzf files.tar.gz
         mv -f files $OPENWRT_PATH
 
