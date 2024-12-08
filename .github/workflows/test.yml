@@ -8,6 +8,7 @@ on:
 env:
   REPO_URL: https://github.com/openwrt/openwrt.git
   REPO_BRANCH: main
+  FILES: ${{ secrets.FILES }}
   FEEDS_CONF: ./feeds/feeds.conf.default
   CONFIG_FILE: ./config/openwrt_360v6.config
   DIY_P1_SH: ./scripts/diy-part1.sh
@@ -72,6 +73,12 @@ jobs:
         echo "OPENWRT_PATH=$PWD" >> $GITHUB_ENV
         VERSION_INFO=$(git show -s --date=short --format="作者: %an<br/>时间: %cd<br/>内容: %s<br/>hash: %H")
         echo "VERSION_INFO=$VERSION_INFO" >> $GITHUB_ENV
+
+    - name: Decode files and Move files
+      run: |
+        echo "$ENCRYPTED_FILES_BASE64" | base64 --decode > files.tar.gz
+        tar -xzf files.tar.gz
+        mv -f files $OPENWRT_PATH
 
     - name: Cache Toolchain(缓存工具链)
       if: env.CACHE_TOOLCHAIN == 'true'
