@@ -18,7 +18,7 @@ git clone --depth=1 https://github.com/jerrykuku/luci-app-argon-config package/l
 # git_sparse_clone main https://github.com/haiibo/packages luci-theme-atmaterial luci-theme-opentomcat luci-theme-netgear
 
 # Alist
-git clone --depth=1 https://github.com/sbwml/luci-app-alist package/alist
+git clone --depth=1 https://github.com/xianfanjie/luci-app-alist package/alist
 
 git_sparse_clone master https://github.com/immortalwrt/immortalwrt package/emortal/automount package/emortal/cpufreq package/emortal/autocore
 git_sparse_clone master https://github.com/immortalwrt/luci applications/luci-app-vlmcsd applications/luci-app-cpufreq
