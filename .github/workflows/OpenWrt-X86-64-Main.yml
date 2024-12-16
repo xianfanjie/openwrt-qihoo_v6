@@ -1,4 +1,4 @@
-name: OpenWrt-IPQ60XX-360V6-Main
+name: OpenWrt-X86-64-Main
 
 on:
   workflow_dispatch:
@@ -16,15 +16,15 @@ env:
   REPO_BRANCH: main
   ENCODE_FILES: ${{ secrets.ENCODE_FILES }}
   FEEDS_CONF: ./feeds/feeds.conf.default
-  CONFIG_FILE: ./config/openwrt_360v6.config
+  CONFIG_FILE: ./config/openwrt_X86_64.config
   DIY_P1_SH: ./scripts/diy-part1.sh
   DIY_P2_SH: ./scripts/openwrt-diy-part2.sh
   CLASH_KERNEL: amd64
   CACHE_TOOLCHAIN: true
   UPLOAD_BIN_DIR: true
   FIRMWARE_RELEASE: true
-  FIRMWARE_TAG: IPQ60XX-Main
-  DEVICE_NAME: qihoo_360V6
+  FIRMWARE_TAG: X86-Main
+  DEVICE_NAME: X86_64
   KERNEL_VERSION: 6.6
   TZ: Asia/Shanghai
 
