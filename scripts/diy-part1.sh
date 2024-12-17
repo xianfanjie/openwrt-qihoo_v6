@@ -40,6 +40,11 @@ find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/PKG_SOURCE_U
 sed -i 's/PKG_VERSION:=1.37.0/PKG_VERSION:=1.36.0/' feeds/packages/net/aria2/Makefile
 sed -i 's/^PKG_HASH:=.*$/PKG_HASH:=58d1e7608c12404f0229a3d9a4953d0d00c18040504498b483305bcb3de907a5/' feeds/packages/net/aria2/Makefile
 
+sed -i 's/PKG_VERSION:=3.41.0/PKG_VERSION:=3.40.0/' package/alist/alist/Makefile
+sed -i 's/^PKG_HASH:=.*$/PKG_HASH:=350f6d0610cebb70c645e52a87aaf0e8cb5bb275593ee22778ed8348da48b005/' package/alist/alist/Makefile
+sed -i 's/PKG_WEB_VERSION:=3.41.0/PKG_WEB_VERSION:=3.39.2/g' package/alist/alist/Makefile
+sed -i 's/HASH:=7fbc3e83874fca15eb6590aad2c09cd6eb4f15aa7febe2b25a961ea56ba5265b/HASH:=d998315aff5544e7d7248214d02a3b04a92366bf0ac50fb4791b23833e8b543a/' package/alist/alist/Makefile
+
 ./scripts/feeds install -a
 
 
