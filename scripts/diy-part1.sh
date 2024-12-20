@@ -24,6 +24,8 @@ git_sparse_clone master https://github.com/immortalwrt/immortalwrt package/emort
 git_sparse_clone master https://github.com/immortalwrt/luci applications/luci-app-vlmcsd applications/luci-app-cpufreq
 git_sparse_clone master https://github.com/immortalwrt/packages net/vlmcsd
 
+git_sparse_clone dev https://github.com/xianfanjie/OpenClash luci-app-openclash
+
 # git_sparse_clone master https://github.com/coolsnowwolf/luci applications/luci-app-vlmcsd
 # git_sparse_clone master https://github.com/coolsnowwolf/packages net/vlmcsd
 ./scripts/feeds update -a
