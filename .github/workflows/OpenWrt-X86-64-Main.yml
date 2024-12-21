@@ -186,7 +186,7 @@ jobs:
         body: |
           **This is OpenWrt Firmware for ${{ env.FIRMWARE_TAG }}**
           ### 📒 这是由OpenWrt官方主线源码构建的固件
-          - 这是带WIFI的 ${{ env.KERNEL_VERSION }} 内核固件
+          - 这是 ${{ env.KERNEL_VERSION }} 内核固件
           - 💻 这是 ${{ env.FIRMWARE_TAG }} 平台 ${{ env.DEVICE_NAME }}使用的 OpenWrt 固件
           - ⚽ 固件源码: ${{ env.REPO_URL }}
           - 💝 源码分支: ${{ env.REPO_BRANCH }}
