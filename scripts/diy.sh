@@ -28,7 +28,8 @@ git_sparse_clone dev https://github.com/xianfanjie/OpenClash luci-app-openclash
 sed -i "s/luci-theme-bootstrap/luci-theme-argon/g" $(find ./feeds/luci/collections/ -type f -name "Makefile")
 
 sed -i 's/ImmortalWrt/OpenWrt/g' package/base-files/files/bin/config_generate
-sed -i 's/downloads.immortalwrt.org/mirrors.pku.edu.cn\/immortalwrt/' package/base-files/image-config.in
+sed -i 's/ImmortalWrt/OpenWrt/g' package/network/config/wifi-scripts/files/lib/wifi/mac80211.uc
+sed -i 's/downloads.immortalwrt.org/mirrors.pku.edu.cn\/immortalwrt/' include/version.mk package/base-files/image-config.in
 
 # 修改 Makefile
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/..\/..\/luci.mk/$(TOPDIR)\/feeds\/luci\/luci.mk/g' {}
