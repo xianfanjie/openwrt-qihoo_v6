@@ -138,7 +138,7 @@ jobs:
         echo "status=success" >> $GITHUB_OUTPUT
         echo "DATE=$(date +"%Y-%m-%d %H:%M:%S")" >> $GITHUB_ENV
         echo "FILE_DATE=$(date +"%Y-%m-%d %H-%M-%S")" >> $GITHUB_ENV
-        rename -v "s/openwrt-/$(date +"%Y-%m-%d-%H-%M")-openwrt-/" bin/targets/*/*/* || true
+        rename -v "s/immortalwrt-/$(date +"%Y-%m-%d-%H-%M")-immortalwrt-/" bin/targets/*/*/* || true
 
     - name: Check Space Usage(检查空间使用情况)
       if: (!cancelled())
@@ -184,8 +184,8 @@ jobs:
         token: ${{ secrets.GITHUB_TOKEN }}
         artifacts: ${{ env.FIRMWARE_PATH }}/*
         body: |
-          **This is OpenWrt Firmware for ${{ env.FIRMWARE_TAG }}**
-          ### 📒 这是由OpenWrt官方主线源码构建的固件
+          **This is immortalwrt Firmware for ${{ env.FIRMWARE_TAG }}**
+          ### 📒 这是由 immortalwrt Master分支源码构建的固件
           - 这是带WIFI的 ${{ env.KERNEL_VERSION }} 内核固件
           - 💻 这是 ${{ env.FIRMWARE_TAG }} 平台 ${{ env.DEVICE_NAME }}使用的 OpenWrt 固件
           - ⚽ 固件源码: ${{ env.REPO_URL }}

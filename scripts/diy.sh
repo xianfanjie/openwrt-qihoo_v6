@@ -19,17 +19,16 @@ git clone --depth=1 https://github.com/jerrykuku/luci-app-argon-config package/l
 
 # Alist
 git clone --depth=1 https://github.com/xianfanjie/luci-app-alist package/alist
+# openclash
+git_sparse_clone dev https://github.com/xianfanjie/OpenClash luci-app-openclash
 
-#git_sparse_clone master https://github.com/immortalwrt/immortalwrt package/emortal/automount package/emortal/cpufreq package/emortal/autocore
-#git_sparse_clone master https://github.com/immortalwrt/luci applications/luci-app-vlmcsd applications/luci-app-cpufreq
-#git_sparse_clone master https://github.com/immortalwrt/packages net/vlmcsd
-
-# git_sparse_clone master https://github.com/coolsnowwolf/luci applications/luci-app-vlmcsd
-# git_sparse_clone master https://github.com/coolsnowwolf/packages net/vlmcsd
 ./scripts/feeds update -a
 
 # 修改默认主题
 sed -i "s/luci-theme-bootstrap/luci-theme-argon/g" $(find ./feeds/luci/collections/ -type f -name "Makefile")
+
+sed -i 's/ImmortalWrt/OpenWrt/g' package/base-files/files/bin/config_generate
+sed -i 's/downloads.immortalwrt.org/mirrors.pku.edu.cn\/immortalwrt/' package/base-files/image-config.in
 
 # 修改 Makefile
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/..\/..\/luci.mk/$(TOPDIR)\/feeds\/luci\/luci.mk/g' {}

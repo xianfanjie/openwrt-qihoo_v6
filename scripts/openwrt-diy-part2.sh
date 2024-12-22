@@ -29,6 +29,6 @@ sed -i "s/timezone:string:GMT0/timezone:string:CST-8/g" package/base-files/files
 sed -i "s/zonename:string:UTC/zonename:string:Asia\/Shanghai/g" package/base-files/files/etc/init.d/system
 
 # 修改软件包源
-sed -i 's/downloads.openwrt.org/mirrors.pku.edu.cn\/openwrt/' package/base-files/image-config.in
+#sed -i 's/downloads.openwrt.org/mirrors.pku.edu.cn\/openwrt/' package/base-files/image-config.in
 # 修改默认主题
 #sed -i "s/luci-theme-bootstrap/luci-theme-argon/g" $(find ./feeds/luci/collections/ -type f -name "Makefile")
