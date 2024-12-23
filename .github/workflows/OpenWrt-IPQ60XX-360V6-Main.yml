@@ -8,6 +8,11 @@ on:
         required: true
         type: boolean
         default: false
+      set_wifi_password:
+        description: 'set wifi password'
+        required: true
+        type: boolean
+        default: false
 #  schedule:
 #    - cron: 0 19 * * *
 
@@ -15,6 +20,7 @@ env:
   REPO_URL: https://github.com/openwrt/openwrt.git
   REPO_BRANCH: main
   ENCODE_FILES: ${{ secrets.ENCODE_FILES }}
+  WIFI_PASSWORD: ${{ secrets.WIFI_PASSWORD }}
   FEEDS_CONF: ./feeds/feeds.conf.default
   CONFIG_FILE: ./config/openwrt_360v6.config
   DIY_P1_SH: ./scripts/diy-part1.sh
@@ -86,6 +92,14 @@ jobs:
         echo "$ENCODE_FILES" | base64 --decode > files.tar.gz
         tar -xzf files.tar.gz
         mv -f files $OPENWRT_PATH
+    
+    - name: Enable WIFI and Set  Password
+      if: ${{ github.event.inputs.set_wifi_password == 'true' && env.WIFI_PASSWORD != '' }}
+      run: |
+        cd $OPENWRT_PATH
+        sed -i "s/disabled='.*'$/disabled='0'/" package/network/config/wifi-scripts/files/lib/wifi/mac80211.uc
+        sed -i "s/encryption='.*'$/encryption='psk2'/" package/network/config/wifi-scripts/files/lib/wifi/mac80211.uc
+        sed -i "s/key='.*'$/key='${PASSWORD}'/" package/network/config/wifi-scripts/files/lib/wifi/mac80211.uc
 
     - name: Generate Variables(生成变量)
       run: |
