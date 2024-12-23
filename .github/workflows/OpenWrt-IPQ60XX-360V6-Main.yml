@@ -8,8 +8,8 @@ on:
         required: true
         type: boolean
         default: false
-      set_wifi_password:
-        description: 'set wifi password'
+      set_password:
+        description: 'set password'
         required: true
         type: boolean
         default: false
@@ -20,7 +20,7 @@ env:
   REPO_URL: https://github.com/openwrt/openwrt.git
   REPO_BRANCH: main
   ENCODE_FILES: ${{ secrets.ENCODE_FILES }}
-  WIFI_PASSWORD: ${{ secrets.WIFI_PASSWORD }}
+  PASSWORD: ${{ secrets.PASSWORD }}
   FEEDS_CONF: ./feeds/feeds.conf.default
   CONFIG_FILE: ./config/openwrt_360v6.config
   DIY_P1_SH: ./scripts/diy-part1.sh
@@ -94,12 +94,18 @@ jobs:
         mv -f files $OPENWRT_PATH
     
     - name: Enable WIFI and Set  Password
-      if: ${{ github.event.inputs.set_wifi_password == 'true' && env.WIFI_PASSWORD != '' }}
+      if: ${{ github.event.inputs.set_password == 'true' && env.PASSWORD != '' }}
       run: |
         cd $OPENWRT_PATH
+        
         sed -i "s/disabled='.*'$/disabled='0'/" package/network/config/wifi-scripts/files/lib/wifi/mac80211.uc
         sed -i "s/encryption='.*'$/encryption='psk2'/" package/network/config/wifi-scripts/files/lib/wifi/mac80211.uc
         sed -i "s/key='.*'$/key='${PASSWORD}'/" package/network/config/wifi-scripts/files/lib/wifi/mac80211.uc
+        
+        salt=$(openssl rand -base64 16)
+        last_changed_date=$(( $(date +%s) / 86400 ))
+        root_password_hash=$(openssl passwd -5 -salt $salt $PASSWORD)
+        sed -i "s|^root:[^:]*:|root:$root_password_hash:$last_changed_date|g" package/base-files/files/etc/shadow
 
     - name: Generate Variables(生成变量)
       run: |
