@@ -178,7 +178,7 @@ jobs:
         cd $OPENWRT_PATH/bin/targets/*/*
         cat sha256sums
         cp $OPENWRT_PATH/.config build.config
-        cp -r $OPENWRT_PATH/bin/packages packages
+        [ -d "$OPENWRT_PATH/bin/packages" ] && cp -r "$OPENWRT_PATH/bin/packages" packages
         tar -zcf Packages.tar.gz packages
         rm -rf packages
         echo "FIRMWARE_PATH=$PWD" >> $GITHUB_ENV
