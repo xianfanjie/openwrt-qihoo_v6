@@ -4,15 +4,20 @@ on:
   workflow_dispatch:
     inputs:
       load_files:
-        description: 'load files'
+        description: '加载自定义配置文件'
         required: true
         type: boolean
         default: false
       set_password:
-        description: 'set password'
+        description: '启用WiFi并设置WiFi密码和root密码'
         required: true
         type: boolean
         default: false
+      config:
+        description: '配置文件名'
+        required: true
+        type: string
+        default: 'openwrt_360v6.config'
 #  schedule:
 #    - cron: 0 19 * * *
 
@@ -22,7 +27,7 @@ env:
   ENCODE_FILES: ${{ secrets.ENCODE_FILES }}
   PASSWORD: ${{ secrets.PASSWORD }}
   FEEDS_CONF: ./feeds/feeds.conf.default
-  CONFIG_FILE: ./config/openwrt_360v6.config
+  CONFIG_FILE: ./config/${{ github.event.inputs.config }}
   DIY_P1_SH: ./scripts/diy-part1.sh
   DIY_P2_SH: ./scripts/openwrt-diy-part2.sh
   CLASH_KERNEL: amd64
