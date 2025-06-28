@@ -19,8 +19,7 @@ git clone --depth=1 https://github.com/jerrykuku/luci-app-argon-config package/l
 
 # openlist
 git clone --depth=1 https://github.com/xianfanjie/OpenList-OpenWRT package/openlist
-sed -i '/golang-package/a \\tGO_PKG_DEFAULT_LDFLAGS:=-w -s -extldflags "-static"' package/openlist/openlist/Makefile
-sed -i '/INSTALL_DATA/a \\t/usr/bin/upx --lzma --best $(1)\/usr\/bin\/openlist' package/openlist/openlist/Makefile
+sed -i '/golang-package/a \\tGO_PKG_DEFAULT_LDFLAGS:=-w -s' package/openlist/openlist/Makefile
 
 git_sparse_clone master https://github.com/immortalwrt/immortalwrt package/emortal/automount package/emortal/cpufreq package/emortal/autocore
 git_sparse_clone master https://github.com/immortalwrt/luci applications/luci-app-vlmcsd applications/luci-app-cpufreq
