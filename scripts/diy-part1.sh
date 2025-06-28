@@ -39,7 +39,7 @@ git_sparse_clone main https://github.com/xiaorouji/openwrt-passwall2 luci-app-pa
 ./scripts/feeds update -a
 
 rm -rf feeds/packages/lang/golang
-git clone --depth=1 https://github.com/sbwml/packages_lang_golang -b 24.x feeds/packages/lang/golang
+git clone --depth=1 https://github.com/sbwml/packages_lang_golang -b 25.x feeds/packages/lang/golang
 
 # 修改默认主题
 sed -i "s/luci-theme-bootstrap/luci-theme-argon/g" $(find ./feeds/luci/collections/ -type f -name "Makefile")
