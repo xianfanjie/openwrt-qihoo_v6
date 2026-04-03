@@ -19,31 +19,32 @@ git clone --depth=1 https://github.com/jerrykuku/luci-app-argon-config package/l
 
 # openlist
 git clone --depth=1 https://github.com/xianfanjie/OpenList-OpenWRT package/openlist
-sed -i '/golang-package/a \\tGO_PKG_DEFAULT_LDFLAGS:=-w -s' package/openlist/openlist/Makefile
+sed -i '/golang-package/a \\tGO_PKG_DEFAULT_LDFLAGS:=-w -s -extldflags "-static"' package/openlist/openlist/Makefile
+sed -i '/openlist.init/a \\t/usr/bin/upx --lzma --best $(1)\/usr\/bin\/openlist' package/openlist/openlist/Makefile
 
 git_sparse_clone master https://github.com/immortalwrt/immortalwrt package/emortal/automount package/emortal/cpufreq package/emortal/autocore
 git_sparse_clone master https://github.com/immortalwrt/luci applications/luci-app-vlmcsd applications/luci-app-cpufreq
 git_sparse_clone master https://github.com/immortalwrt/packages net/vlmcsd
 
 # openclash
-git_sparse_clone dev https://github.com/xianfanjie/OpenClash luci-app-openclash
+git_sparse_clone dev https://github.com/vernesong/OpenClash luci-app-openclash
 
 # passwall
-git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall-packages package/openwrt-passwall
-git_sparse_clone main https://github.com/xiaorouji/openwrt-passwall luci-app-passwall
-git_sparse_clone main https://github.com/xiaorouji/openwrt-passwall2 luci-app-passwall2
+# git clone --depth=1 https://github.com/xiaorouji/openwrt-passwall-packages package/openwrt-passwall
+# git_sparse_clone main https://github.com/xiaorouji/openwrt-passwall luci-app-passwall
+# git_sparse_clone main https://github.com/xiaorouji/openwrt-passwall2 luci-app-passwall2
 
 # git_sparse_clone master https://github.com/coolsnowwolf/luci applications/luci-app-vlmcsd
 # git_sparse_clone master https://github.com/coolsnowwolf/packages net/vlmcsd
 ./scripts/feeds update -a
 
 rm -rf feeds/packages/lang/golang
-git clone --depth=1 https://github.com/sbwml/packages_lang_golang -b 25.x feeds/packages/lang/golang
+# git clone --depth=1 https://github.com/sbwml/packages_lang_golang -b 25.x feeds/packages/lang/golang
+git clone --depth=1 https://github.com/OpenListTeam/packages_lang_golang -b 25.x feeds/packages/lang/golang
 
 # 修改默认主题
 sed -i "s/luci-theme-bootstrap/luci-theme-argon/g" $(find ./feeds/luci/collections/ -type f -name "Makefile")
-# 修改默认软件包源
-#sed -i 's/downloads.openwrt.org/mirrors.pku.edu.cn\/openwrt/' include/version.mk package/base-files/image-config.in
+
 # 修改 Makefile
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/..\/..\/luci.mk/$(TOPDIR)\/feeds\/luci\/luci.mk/g' {}
 find package/*/ -maxdepth 2 -path "*/Makefile" | xargs -i sed -i 's/..\/..\/lang\/golang\/golang-package.mk/$(TOPDIR)\/feeds\/packages\/lang\/golang\/golang-package.mk/g' {}
